@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../user/user.service';
+import { UserModel } from '../user/user';
 
 @Component({
   selector: 'app-auth',
@@ -7,13 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuthComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _UserServiceModel: UserService) { }
 
   ngOnInit() {
   }
 
   login = (email: string, password: string): void => {
     console.log('onsubmit');
+    this._UserServiceModel.authenticate({ email: email, password })
+      .subscribe((answer: UserModel.Answer) => {
+        console.log('authenticate ok token : ', answer );
+      });
   }
 
 }
